@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소크라테스 데일리 · 보관함</title>
+<style>
+  :root {
+    --ground:#ffffff; --surface:#f6f7f8; --ink:#191c20; --muted:#5b626a; --faint:#9aa0a7;
+    --accent:#0f7a70; --accent-soft:rgba(15,122,112,0.08); --line:#e7e9ec;
+    --serif:"Nanum Myeongjo",Batang,Georgia,"Apple SD Gothic Neo",serif;
+    --sans:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"Cascadia Code","D2Coding",ui-monospace,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){:root{--ground:#16181c;--surface:#1e2127;--ink:#eceef1;--muted:#a0a6ad;--faint:#6b7178;--accent:#3ec4b6;--accent-soft:rgba(62,196,182,0.13);--line:#2b2f36;}}
+  :root[data-theme="light"]{--ground:#ffffff;--surface:#f6f7f8;--ink:#191c20;--muted:#5b626a;--faint:#9aa0a7;--accent:#0f7a70;--accent-soft:rgba(15,122,112,0.08);--line:#e7e9ec;}
+  :root[data-theme="dark"]{--ground:#16181c;--surface:#1e2127;--ink:#eceef1;--muted:#a0a6ad;--faint:#6b7178;--accent:#3ec4b6;--accent-soft:rgba(62,196,182,0.13);--line:#2b2f36;}
+  *{box-sizing:border-box;} html,body{margin:0;}
+  body{background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6;padding:clamp(1.6rem,6vw,4rem) 1.2rem;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:620px;margin:0 auto;}
+  .greek{font-family:var(--mono);letter-spacing:0.4em;text-transform:uppercase;font-size:0.68rem;color:var(--accent);margin:0 0 0.5rem;}
+  h1{font-weight:800;font-size:clamp(1.9rem,1.4rem+2vw,2.8rem);letter-spacing:-0.02em;margin:0 0 0.6rem;}
+  .tagline{color:var(--muted);font-size:1rem;margin:0 0 2.4rem;}
+  .tagline em{font-family:var(--serif);font-style:italic;color:var(--ink);}
+  .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;}
+  .issue{display:flex;align-items:baseline;gap:0.9rem;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.15rem;transition:border-color .2s ease;}
+  .issue:hover{border-color:var(--accent);}
+  .no{font-family:var(--mono);font-size:0.72rem;color:var(--accent);font-weight:700;flex:none;}
+  .issue .t{font-weight:700;letter-spacing:-0.01em;line-height:1.35;}
+  .issue .d{margin-left:auto;font-family:var(--mono);font-size:0.68rem;color:var(--faint);flex:none;}
+  footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:0.72rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="greek">Σωκράτης · Daily</p>
+  <h1>소크라테스 데일리</h1>
+  <p class="tagline">매일 아침 3분. 바이브코더 성장 편지 — <em>정보가 아니라, 생각의 씨앗을.</em></p>
+
+  <ul class="list" id="list">
+    <li>
+      <a class="issue" href="issues/2026-07-19.html">
+        <span class="no">No.001</span>
+        <span class="t">AI가 코드를 쓰기 시작하자, 사람은 '검사원'이 되었다</span>
+        <span class="d">07·19</span>
+      </a>
+    </li>
+  </ul>
+
+  <footer>새 호가 나오면 이 목록 맨 위에 쌓입니다.</footer>
+</div>
+</body>
+</html>

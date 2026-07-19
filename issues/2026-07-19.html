@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소크라테스 데일리 · No.001</title>
+<style>
+  :root {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15, 122, 112, 0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+    --serif: "Nanum Myeongjo", Batang, Georgia, "Apple SD Gothic Neo", serif;
+    --sans: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Cascadia Code", "D2Coding", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --maxw: 680px;
+    --step-0: clamp(0.85rem, 0.82rem + 0.18vw, 0.92rem);
+    --step-1: clamp(1rem, 0.96rem + 0.22vw, 1.09rem);
+    --step-2: clamp(1.28rem, 1.14rem + 0.68vw, 1.58rem);
+    --step-3: clamp(1.85rem, 1.5rem + 1.5vw, 2.6rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+      --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+      --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+      --accent-soft: rgba(62, 196, 182, 0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15,122,112,0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+  }
+  :root[data-theme="dark"] {
+    --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+    --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+    --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+    --accent-soft: rgba(62,196,182,0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  .page { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: var(--step-1); line-height: 1.68; min-height: 100vh; padding: clamp(1.4rem, 5vw, 3.5rem) 1.2rem 4rem; -webkit-font-smoothing: antialiased; letter-spacing: -0.003em; }
+  .paper { max-width: var(--maxw); margin: 0 auto; display: flex; flex-direction: column; gap: clamp(2rem, 5vw, 3.2rem); }
+  section { animation: rise 0.55s ease both; }
+  section:nth-child(2) { animation-delay: 0.05s; }
+  section:nth-child(3) { animation-delay: 0.1s; }
+  section:nth-child(4) { animation-delay: 0.15s; }
+  section:nth-child(5) { animation-delay: 0.2s; }
+  section:nth-child(6) { animation-delay: 0.25s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { section { animation: none; } }
+  b, strong { font-weight: 700; color: var(--ink); }
+  .masthead { border-bottom: 1px solid var(--line); padding-bottom: 1.4rem; }
+  .greek { font-family: var(--mono); letter-spacing: 0.4em; text-transform: uppercase; font-size: 0.68rem; color: var(--accent); margin: 0 0 0.55rem; padding-left: 0.4em; }
+  .masthead h1 { font-weight: 800; font-size: var(--step-3); line-height: 1.08; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); margin-top: 1rem; font-variant-numeric: tabular-nums; }
+  .meta .dot { color: var(--faint); }
+  .eyebrow { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+  .eyebrow::before { content: ""; width: 1.5rem; height: 2px; background: var(--accent); display: inline-block; border-radius: 2px; }
+  .hero h2 { font-weight: 800; font-size: var(--step-2); line-height: 1.3; margin: 0 0 0.9rem; letter-spacing: -0.015em; text-wrap: balance; }
+  .hero p { margin: 0.8rem 0; }
+  .source { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 0.35rem 0.75rem; border-radius: 999px; margin-top: 0.5rem; text-decoration: none; }
+  .source b { color: var(--accent); font-weight: 600; }
+  .finds { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 480px) { .finds { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.15rem; display: flex; flex-direction: column; gap: 0.55rem; transition: border-color 0.2s ease; text-decoration: none; color: inherit; }
+  .card:hover { border-color: var(--accent); }
+  .card .tag { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .card h3 { margin: 0; font-size: var(--step-1); font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
+  .card p { margin: 0; font-size: var(--step-0); color: var(--muted); line-height: 1.6; }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem 1.2rem 1.1rem; overflow-x: auto; }
+  .diagram-wrap svg { display: block; width: 100%; height: auto; min-width: 430px; }
+  .caption { font-size: var(--step-0); color: var(--muted); margin: 1rem 0 0; text-align: center; }
+  .d-box { fill: var(--ground); stroke: var(--line); stroke-width: 1.2; }
+  .d-box-good { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; }
+  .d-label { fill: var(--ink); font-family: var(--sans); font-weight: 600; }
+  .d-dim { fill: var(--muted); font-family: var(--sans); }
+  .d-arrow { stroke: var(--diagram-dim); fill: none; stroke-width: 1.6; }
+  .d-arrow-good { stroke: var(--accent); }
+  .d-num { fill: var(--accent-ink); font-family: var(--mono); font-weight: 700; }
+  .d-numbg { fill: var(--accent); }
+  .d-lane { fill: var(--faint); font-family: var(--mono); letter-spacing: 0.1em; }
+  .socratic { background: var(--accent-soft); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 1.5rem 1.6rem; }
+  .socratic .who { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.7rem; }
+  .socratic blockquote { margin: 0; font-family: var(--serif); font-size: var(--step-2); line-height: 1.45; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+  .socratic .sub { margin: 0.9rem 0 0; font-size: var(--step-0); color: var(--muted); font-family: var(--sans); }
+  .exp { display: flex; gap: 1rem; align-items: flex-start; }
+  .exp .check { flex: none; width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; border: 2px solid var(--accent); border-radius: 7px; display: grid; place-items: center; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+  .exp .body h3 { margin: 0 0 0.4rem; font-size: var(--step-1); font-weight: 700; letter-spacing: -0.01em; }
+  .exp .body p { margin: 0; color: var(--muted); font-size: var(--step-0); }
+  footer { border-top: 1px solid var(--line); padding-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  footer .line { font-family: var(--mono); font-size: 0.71rem; color: var(--muted); }
+  footer .prompt { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="paper">
+
+    <section class="masthead">
+      <p class="greek">Σωκράτης · Daily</p>
+      <h1>소크라테스 데일리</h1>
+      <div class="meta">
+        <span>No.001</span>
+        <span class="dot">/</span>
+        <span>2026·07·19 일</span>
+        <span class="dot">/</span>
+        <span>오늘의 3분</span>
+        <span class="dot">/</span>
+        <span>바이브코더 성장 편지</span>
+      </div>
+    </section>
+
+    <section class="hero">
+      <p class="eyebrow">오늘의 한 컷</p>
+      <h2>AI가 코드를 쓰기 시작하자, 사람은 '검사원'이 되었다</h2>
+      <p>파이썬 도구를 만드는 Pydantic 팀의 글이 화제다. LLM으로 코드를 짜면 속도는 분명 빨라진다. 그런데 사람은 이제 쏟아지는 결과물을 끝없이 검토하고 고치는 <b>감시자</b> 자리에 앉는다. 예전엔 직접 코드를 짜며 얻던 보상 — 문제를 풀고, 실행에 성공하는 그 쾌감 — 이 사라지고, 검토의 피로만 쌓인다는 것이다.</p>
+      <p>글쓴이의 결론이 날카롭다. 진짜 병목은 처음부터 '코드 작성'이 아니라 사람의 <b>판단과 주의력</b>이었다. AI는 그 사실을 드러냈을 뿐이다.</p>
+      <p><b>왜 자네한테 중요한가</b> — 바이브코딩으로 뭔가 만들 때 진짜 길러야 할 힘은 빠른 타이핑이 아니라, 무엇이 맞는지 가려내는 눈이라는 뜻이다. 영상·콘텐츠를 만들며 길러온 자네의 '판단하는 감각'이 오히려 무기가 된다.</p>
+      <a class="source" href="https://news.hada.io/topic?id=31546" target="_blank" rel="noopener">GeekNews · <b>The Human in the Loop is Exhausted</b></a>
+    </section>
+
+    <section class="finds">
+      <a class="card" href="https://news.hada.io/topic?id=31542" target="_blank" rel="noopener">
+        <span class="tag">GeekNews · 읽을거리</span>
+        <h3>바이브 봅슬레이드 — 어느새 승객이 된 개발자</h3>
+        <p>자동완성 → 코드생성 → 검토 생략 → 프롬프트조차 안 읽기. 정해진 트랙을 미끄러져 내려가며 사람이 점점 '이해'를 포기한다는 글이다. 전문가가 100줄 코드를 20시간 봐도 버그를 다 못 잡았다는 실험도 함께 인용된다.</p>
+      </a>
+      <a class="card" href="https://www.youtube.com/watch?v=QqLInsPlt4Y" target="_blank" rel="noopener">
+        <span class="tag">YouTube · Jay Choi</span>
+        <h3>Orca — 에이전트 여러 개를 한 번에 굴리는 도구</h3>
+        <p>클로드코드 같은 AI 에이전트를 한 화면에서 여러 개 동시에 돌리는 'ADE' 도구 리뷰다. 만드는 속도는 빨라지지만 그만큼 사람이 확인할 것도 늘어난다 — 위 두 글과 정확히 맞물리는 지점이다.</p>
+      </a>
+    </section>
+
+    <section id="diagram">
+      <p class="eyebrow">오늘의 도표</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 600 220" role="img" aria-label="병목이 코드 쓰기에서 검토·판단으로 옮겨간 그림">
+          <defs>
+            <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--diagram-dim)"/>
+            </marker>
+            <marker id="ahg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+
+          <!-- 예전 -->
+          <text class="d-lane" x="18" y="55" font-size="11">예전</text>
+          <rect class="d-box" x="70" y="35" width="92" height="40" rx="8"/>
+          <text class="d-label" x="116" y="60" text-anchor="middle" font-size="13">아이디어</text>
+          <line class="d-arrow" x1="162" y1="55" x2="333" y2="55" marker-end="url(#ah)"/>
+          <text class="d-dim" x="247" y="47" text-anchor="middle" font-size="11">코드 쓰기 · 느림</text>
+          <rect class="d-box" x="340" y="35" width="80" height="40" rx="8"/>
+          <text class="d-label" x="380" y="60" text-anchor="middle" font-size="13">완성</text>
+
+          <!-- 지금 -->
+          <text class="d-lane" x="18" y="165" font-size="11">지금</text>
+          <rect class="d-box" x="70" y="145" width="92" height="40" rx="8"/>
+          <text class="d-label" x="116" y="170" text-anchor="middle" font-size="13">아이디어</text>
+          <line class="d-arrow" x1="162" y1="165" x2="243" y2="165" marker-end="url(#ah)"/>
+          <text class="d-dim" x="202" y="157" text-anchor="middle" font-size="10.5">AI 생성 · 빠름</text>
+          <rect class="d-box" x="250" y="145" width="88" height="40" rx="8"/>
+          <text class="d-label" x="294" y="170" text-anchor="middle" font-size="13">코드 더미</text>
+          <line class="d-arrow d-arrow-good" x1="338" y1="165" x2="433" y2="165" marker-end="url(#ahg)"/>
+          <text x="386" y="157" text-anchor="middle" font-size="10.5" fill="var(--accent)" font-family="var(--sans)" font-weight="700">검토·판단 · 느림</text>
+          <rect class="d-box-good" x="440" y="145" width="80" height="40" rx="8"/>
+          <text class="d-label" x="480" y="170" text-anchor="middle" font-size="13">완성</text>
+        </svg>
+      </div>
+      <p class="caption">병목은 사라지지 않았다. '코드 쓰기'에서 '가려내기'로 자리를 옮겨 앉았을 뿐이다.</p>
+    </section>
+
+    <section class="socratic">
+      <p class="who">Σ · 소크라테스가 묻는다</p>
+      <blockquote>자네, AI에게 일을 맡기면 정말 편해지던가? 아니면 '만드는 이'에서 '검사하는 이'로 자리만 옮겨 앉은 것인가?</blockquote>
+      <p class="sub">편해진 게 아니라 힘쓰는 자리가 바뀐 것이라면 — 자네가 새로 길러야 할 힘은 무엇이겠나.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">오늘의 미니 실험</p>
+      <div class="exp">
+        <div class="check">✓</div>
+        <div class="body">
+          <h3>오늘은 '승객' 말고 '운전자' 한 번</h3>
+          <p>다음에 클로드코드가 코드를 바꿔주거든, 바로 넘기지 말고 딱 한 군데만 골라 "이건 뭘 하는 거고, 왜 이렇게 했나"를 한 줄로 적어보게. 딱 하나면 되네. 15분이면 충분하지.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="line">내일도 3분. 매일 아침, 소크라테스가 하나를 건넨다.</p>
+      <p class="line prompt">$ 디스코드에서 "오늘 편지" 라고 답장하면 대화가 이어집니다 ▍</p>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>
