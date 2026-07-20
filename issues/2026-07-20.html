@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소크라테스 데일리 · No.002</title>
+<style>
+  :root {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15, 122, 112, 0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+    --serif: "Nanum Myeongjo", Batang, Georgia, "Apple SD Gothic Neo", serif;
+    --sans: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Cascadia Code", "D2Coding", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --maxw: 680px;
+    --step-0: clamp(0.85rem, 0.82rem + 0.18vw, 0.92rem);
+    --step-1: clamp(1rem, 0.96rem + 0.22vw, 1.09rem);
+    --step-2: clamp(1.28rem, 1.14rem + 0.68vw, 1.58rem);
+    --step-3: clamp(1.85rem, 1.5rem + 1.5vw, 2.6rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+      --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+      --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+      --accent-soft: rgba(62, 196, 182, 0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15,122,112,0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+  }
+  :root[data-theme="dark"] {
+    --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+    --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+    --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+    --accent-soft: rgba(62,196,182,0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  .page { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: var(--step-1); line-height: 1.68; min-height: 100vh; padding: clamp(1.4rem, 5vw, 3.5rem) 1.2rem 4rem; -webkit-font-smoothing: antialiased; letter-spacing: -0.003em; }
+  .paper { max-width: var(--maxw); margin: 0 auto; display: flex; flex-direction: column; gap: clamp(2rem, 5vw, 3.2rem); }
+  section { animation: rise 0.55s ease both; }
+  section:nth-child(2) { animation-delay: 0.05s; }
+  section:nth-child(3) { animation-delay: 0.1s; }
+  section:nth-child(4) { animation-delay: 0.15s; }
+  section:nth-child(5) { animation-delay: 0.2s; }
+  section:nth-child(6) { animation-delay: 0.25s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { section { animation: none; } }
+  b, strong { font-weight: 700; color: var(--ink); }
+  .masthead { border-bottom: 1px solid var(--line); padding-bottom: 1.4rem; }
+  .greek { font-family: var(--mono); letter-spacing: 0.4em; text-transform: uppercase; font-size: 0.68rem; color: var(--accent); margin: 0 0 0.55rem; padding-left: 0.4em; }
+  .masthead h1 { font-weight: 800; font-size: var(--step-3); line-height: 1.08; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); margin-top: 1rem; font-variant-numeric: tabular-nums; }
+  .meta .dot { color: var(--faint); }
+  .eyebrow { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+  .eyebrow::before { content: ""; width: 1.5rem; height: 2px; background: var(--accent); display: inline-block; border-radius: 2px; }
+  .hero h2 { font-weight: 800; font-size: var(--step-2); line-height: 1.3; margin: 0 0 0.9rem; letter-spacing: -0.015em; text-wrap: balance; }
+  .hero p { margin: 0.8rem 0; }
+  .source { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 0.35rem 0.75rem; border-radius: 999px; margin-top: 0.5rem; text-decoration: none; }
+  .source b { color: var(--accent); font-weight: 600; }
+  .finds { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 480px) { .finds { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.15rem; display: flex; flex-direction: column; gap: 0.55rem; transition: border-color 0.2s ease; text-decoration: none; color: inherit; }
+  .card:hover { border-color: var(--accent); }
+  .card .tag { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .card h3 { margin: 0; font-size: var(--step-1); font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
+  .card p { margin: 0; font-size: var(--step-0); color: var(--muted); line-height: 1.6; }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem 1.2rem 1.1rem; overflow-x: auto; }
+  .diagram-wrap svg { display: block; width: 100%; height: auto; min-width: 430px; }
+  .caption { font-size: var(--step-0); color: var(--muted); margin: 1rem 0 0; text-align: center; }
+  .d-box { fill: var(--ground); stroke: var(--line); stroke-width: 1.2; }
+  .d-box-good { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; }
+  .d-label { fill: var(--ink); font-family: var(--sans); font-weight: 600; }
+  .d-dim { fill: var(--muted); font-family: var(--sans); }
+  .d-arrow { stroke: var(--diagram-dim); fill: none; stroke-width: 1.6; }
+  .d-arrow-good { stroke: var(--accent); }
+  .d-num { fill: var(--accent-ink); font-family: var(--mono); font-weight: 700; }
+  .d-numbg { fill: var(--accent); }
+  .d-lane { fill: var(--faint); font-family: var(--mono); letter-spacing: 0.1em; }
+  .socratic { background: var(--accent-soft); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 1.5rem 1.6rem; }
+  .socratic .who { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.7rem; }
+  .socratic blockquote { margin: 0; font-family: var(--serif); font-size: var(--step-2); line-height: 1.45; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+  .socratic .sub { margin: 0.9rem 0 0; font-size: var(--step-0); color: var(--muted); font-family: var(--sans); }
+  .exp { display: flex; gap: 1rem; align-items: flex-start; }
+  .exp .check { flex: none; width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; border: 2px solid var(--accent); border-radius: 7px; display: grid; place-items: center; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+  .exp .body h3 { margin: 0 0 0.4rem; font-size: var(--step-1); font-weight: 700; letter-spacing: -0.01em; }
+  .exp .body p { margin: 0; color: var(--muted); font-size: var(--step-0); }
+  footer { border-top: 1px solid var(--line); padding-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  footer .line { font-family: var(--mono); font-size: 0.71rem; color: var(--muted); }
+  footer .prompt { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="paper">
+
+    <section class="masthead">
+      <p class="greek">Σωκράτης · Daily</p>
+      <h1>소크라테스 데일리</h1>
+      <div class="meta">
+        <span>No.002</span>
+        <span class="dot">/</span>
+        <span>2026·07·20 월</span>
+        <span class="dot">/</span>
+        <span>오늘의 3분</span>
+        <span class="dot">/</span>
+        <span>바이브코더 성장 편지</span>
+      </div>
+    </section>
+
+    <section class="hero">
+      <p class="eyebrow">오늘의 한 컷</p>
+      <h2>100만 키워드가 드러낸 것 — 검색은 사라지지 않고 '흩어졌다'</h2>
+      <p>Fractl과 Search Engine Land이 월 검색 1만 회 이상 키워드 100만 개(월 354억 회)를 뜯어봤다. AI 때문에 검색이 줄 거라던 예측과 달리, <b>전체 검색량은 거의 평평했다.</b> 대신 28만 개 키워드에서 검색이 빠지고(약 −29%), 14만 개 키워드에서 그만큼 늘었다. 약값·보험 공제액처럼 AI가 한 번에 답해버리는 <b>정보형 검색은 줄고</b>(금융 −38%·건강 −35%), 사고·비교하고 브랜드를 다시 확인하는 <b>검색은 오히려 늘었다</b>(SaaS +48%·라이프스타일 +40%). 그리고 사람들은 구글 밖 — 유튜브(68%)·레딧(57%) — 에서 점점 더 찾는다.</p>
+      <p><b>왜 솔라한테 중요한가</b> — 콘텐츠를 만드는 자네에게 이건 '발견되는 길'이 바뀐다는 뜻이다. 정보만 주는 콘텐츠는 AI가 대신 답해버리고, 취향·신뢰·얼굴이 있어 사람을 남게 하는 콘텐츠가 유튜브 같은 자리에서 더 찾긴다.</p>
+      <a class="source" href="https://searchengineland.com/what-1-million-keywords-reveal-about-ais-impact-on-search-481474" target="_blank" rel="noopener">GeekNews · <b>Search Engine Land</b> — 100만 키워드 분석</a>
+    </section>
+
+    <section class="finds">
+      <a class="card" href="https://news.hada.io/topic?id=31545" target="_blank" rel="noopener">
+        <span class="tag">NEWS · GeekNews</span>
+        <h3>클로드 Fable 5, 오늘부터 Max 요금제에 기본 포함</h3>
+        <p>7월 20일부터 Max·Team Premium 구독자는 Fable 5를 사용 한도의 50%까지 쓴다. 수요가 몰려 단계적으로 열던 걸 표준화했다. 영상·창작 생성에 강한 최상위 모델이라, 콘텐츠 만드는 사람에겐 눈여겨볼 카드다.</p>
+      </a>
+      <a class="card" href="https://news.hada.io/topic?id=31569" target="_blank" rel="noopener">
+        <span class="tag">TOOL · GeekNews</span>
+        <h3>Mindwalk — AI가 코드 어디를 '만졌는지' 야간지도로 본다</h3>
+        <p>클로드 코드 같은 에이전트가 저장소에서 읽고 고친 파일만 빛나는 3D 지도로 세션을 재생하는 도구다. 로그로는 안 보이던 'AI가 뭘 어떻게 이해했는지'를 눈으로 본다. 화면을 다루는 자네라면 흥미로울 접근이다.</p>
+      </a>
+    </section>
+
+    <section id="diagram">
+      <p class="eyebrow">오늘의 도표</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 640 292" role="img" aria-label="검색 수요가 줄어드는 정보형과 늘어나는 선택형으로 재배치되는 도식">
+          <rect class="d-box" x="20" y="104" width="152" height="80" rx="12"/>
+          <text class="d-label" x="96" y="138" text-anchor="middle" font-size="15">전체 검색량</text>
+          <text class="d-dim" x="96" y="160" text-anchor="middle" font-size="12.5">총량은 그대로</text>
+
+          <path class="d-arrow d-arrow-good" d="M172 128 C 258 116 300 84 380 84"/>
+          <polygon class="d-numbg" points="378,78 391,84 378,90"/>
+          <path class="d-arrow" d="M172 160 C 258 172 300 202 380 202"/>
+          <polygon points="378,196 391,202 378,208" style="fill:var(--diagram-dim)"/>
+
+          <rect class="d-box-good" x="384" y="46" width="234" height="78" rx="12"/>
+          <text class="d-label" x="501" y="72" text-anchor="middle" font-size="14.5">▲ 늘어난 검색</text>
+          <text class="d-dim" x="501" y="92" text-anchor="middle" font-size="12.5">사고·비교·브랜드 재확인</text>
+          <text class="d-dim" x="501" y="110" text-anchor="middle" font-size="12.5">SaaS +48% · 라이프 +40%</text>
+
+          <rect class="d-box" x="384" y="164" width="234" height="78" rx="12"/>
+          <text class="d-label" x="501" y="190" text-anchor="middle" font-size="14.5">▼ 줄어든 검색</text>
+          <text class="d-dim" x="501" y="210" text-anchor="middle" font-size="12.5">정보형 — AI가 대신 답함</text>
+          <text class="d-dim" x="501" y="228" text-anchor="middle" font-size="12.5">금융 −38% · 건강 −35%</text>
+
+          <text class="d-lane" x="320" y="280" text-anchor="middle" font-size="11.5">찾는 자리도 이동 — 유튜브 68% · 레딧 57%</text>
+        </svg>
+      </div>
+      <p class="caption">검색은 줄지 않았다. AI가 답해버리는 '정보'는 빠지고, 사람이 확인하려는 '선택'은 남았다.</p>
+    </section>
+
+    <section class="socratic">
+      <p class="who">Σ · 소크라테스가 묻는다</p>
+      <blockquote>자네, 사람들이 궁금한 걸 이제 검색창이 아니라 AI에게 먼저 묻는다면 — 자네가 만든 것은 어디에서 발견되길 바라는가?</blockquote>
+      <p class="sub">AI가 대신 답해줄 수 있는 콘텐츠와, 그래도 사람이 자네를 보러 오게 하는 콘텐츠 — 자네 것은 어느 쪽에 서 있나.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">오늘의 미니 실험</p>
+      <div class="exp">
+        <div class="check">✓</div>
+        <div class="body">
+          <h3>자네 콘텐츠 하나를 'AI에게' 물어보기</h3>
+          <p>최근 만든 콘텐츠 주제 하나를 골라, 클로드에게 "이걸 궁금해하는 사람에게 넌 뭐라 답하니?"라고 물어보게. 그 답에 없는 '자네만의 한 줄'이 무엇인지 딱 하나 적어보면 되네. 15분이면 충분하다.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="line">내일도 3분. 매일 아침, 소크라테스가 하나를 건넨다.</p>
+      <p class="line prompt">$ 디스코드에서 "오늘 편지" 라고 답장하면 대화가 이어집니다 ▍</p>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>
