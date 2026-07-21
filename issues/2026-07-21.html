@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소크라테스 데일리 · No.003</title>
+<style>
+  :root {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15, 122, 112, 0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+    --serif: "Nanum Myeongjo", Batang, Georgia, "Apple SD Gothic Neo", serif;
+    --sans: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Cascadia Code", "D2Coding", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --maxw: 680px;
+    --step-0: clamp(0.85rem, 0.82rem + 0.18vw, 0.92rem);
+    --step-1: clamp(1rem, 0.96rem + 0.22vw, 1.09rem);
+    --step-2: clamp(1.28rem, 1.14rem + 0.68vw, 1.58rem);
+    --step-3: clamp(1.85rem, 1.5rem + 1.5vw, 2.6rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+      --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+      --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+      --accent-soft: rgba(62, 196, 182, 0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #ffffff; --surface: #f6f7f8; --surface-2: #eef0f2;
+    --ink: #191c20; --muted: #5b626a; --faint: #9aa0a7;
+    --accent: #0f7a70; --accent-strong: #0a5d55; --accent-ink: #ffffff;
+    --accent-soft: rgba(15,122,112,0.08); --line: #e7e9ec; --diagram-dim: #b6bcc3;
+  }
+  :root[data-theme="dark"] {
+    --ground: #16181c; --surface: #1e2127; --surface-2: #262a31;
+    --ink: #eceef1; --muted: #a0a6ad; --faint: #6b7178;
+    --accent: #3ec4b6; --accent-strong: #5fd6c9; --accent-ink: #10241f;
+    --accent-soft: rgba(62,196,182,0.13); --line: #2b2f36; --diagram-dim: #4c525a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  .page { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: var(--step-1); line-height: 1.68; min-height: 100vh; padding: clamp(1.4rem, 5vw, 3.5rem) 1.2rem 4rem; -webkit-font-smoothing: antialiased; letter-spacing: -0.003em; word-break: keep-all; overflow-wrap: break-word; }
+  .paper { max-width: var(--maxw); margin: 0 auto; display: flex; flex-direction: column; gap: clamp(2rem, 5vw, 3.2rem); }
+  section { animation: rise 0.55s ease both; }
+  section:nth-child(2) { animation-delay: 0.05s; }
+  section:nth-child(3) { animation-delay: 0.1s; }
+  section:nth-child(4) { animation-delay: 0.15s; }
+  section:nth-child(5) { animation-delay: 0.2s; }
+  section:nth-child(6) { animation-delay: 0.25s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { section { animation: none; } }
+  b, strong { font-weight: 700; color: var(--ink); }
+  .masthead { border-bottom: 1px solid var(--line); padding-bottom: 1.4rem; }
+  .greek { font-family: var(--mono); letter-spacing: 0.4em; text-transform: uppercase; font-size: 0.68rem; color: var(--accent); margin: 0 0 0.55rem; padding-left: 0.4em; }
+  .masthead h1 { font-weight: 800; font-size: var(--step-3); line-height: 1.08; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); margin-top: 1rem; font-variant-numeric: tabular-nums; }
+  .meta .dot { color: var(--faint); }
+  .eyebrow { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+  .eyebrow::before { content: ""; width: 1.5rem; height: 2px; background: var(--accent); display: inline-block; border-radius: 2px; }
+  .hero h2 { font-weight: 800; font-size: var(--step-2); line-height: 1.3; margin: 0 0 0.9rem; letter-spacing: -0.015em; text-wrap: balance; }
+  .hero p { margin: 0.8rem 0; }
+  .source { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.71rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 0.35rem 0.75rem; border-radius: 999px; margin-top: 0.5rem; text-decoration: none; }
+  .source b { color: var(--accent); font-weight: 600; }
+  .finds { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 480px) { .finds { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.15rem; display: flex; flex-direction: column; gap: 0.55rem; transition: border-color 0.2s ease; text-decoration: none; color: inherit; }
+  .card:hover { border-color: var(--accent); }
+  .card .tag { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .card h3 { margin: 0; font-size: var(--step-1); font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
+  .card p { margin: 0; font-size: var(--step-0); color: var(--muted); line-height: 1.6; }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.5rem 1.2rem 1.1rem; overflow-x: auto; }
+  .diagram-wrap svg { display: block; width: 100%; height: auto; min-width: 430px; }
+  .caption { font-size: var(--step-0); color: var(--muted); margin: 1rem 0 0; text-align: center; }
+  .d-box { fill: var(--ground); stroke: var(--line); stroke-width: 1.2; }
+  .d-box-good { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.2; }
+  .d-label { fill: var(--ink); font-family: var(--sans); font-weight: 600; }
+  .d-dim { fill: var(--muted); font-family: var(--sans); }
+  .d-arrow { stroke: var(--diagram-dim); fill: none; stroke-width: 1.6; }
+  .d-arrow-good { stroke: var(--accent); }
+  .d-num { fill: var(--accent-ink); font-family: var(--mono); font-weight: 700; }
+  .d-numbg { fill: var(--accent); }
+  .d-lane { fill: var(--faint); font-family: var(--mono); letter-spacing: 0.1em; }
+  .socratic { background: var(--accent-soft); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 1.5rem 1.6rem; }
+  .socratic .who { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.7rem; }
+  .socratic blockquote { margin: 0; font-family: var(--serif); font-size: var(--step-2); line-height: 1.45; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+  .socratic .sub { margin: 0.9rem 0 0; font-size: var(--step-0); color: var(--muted); font-family: var(--sans); }
+  .exp { display: flex; gap: 1rem; align-items: flex-start; }
+  .exp .check { flex: none; width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; border: 2px solid var(--accent); border-radius: 7px; display: grid; place-items: center; color: var(--accent); font-size: 0.95rem; font-weight: 700; }
+  .exp .body h3 { margin: 0 0 0.4rem; font-size: var(--step-1); font-weight: 700; letter-spacing: -0.01em; }
+  .exp .body p { margin: 0; color: var(--muted); font-size: var(--step-0); }
+  footer { border-top: 1px solid var(--line); padding-top: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  footer .line { font-family: var(--mono); font-size: 0.71rem; color: var(--muted); }
+  footer .prompt { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="paper">
+
+    <section class="masthead">
+      <p class="greek">Σωκράτης · Daily</p>
+      <h1>소크라테스 데일리</h1>
+      <div class="meta">
+        <span>No.003</span>
+        <span class="dot">/</span>
+        <span>2026·07·21 화</span>
+        <span class="dot">/</span>
+        <span>오늘의 3분</span>
+        <span class="dot">/</span>
+        <span>바이브코더 성장 편지</span>
+      </div>
+    </section>
+
+    <section class="hero">
+      <p class="eyebrow">오늘의 한 컷</p>
+      <h2>'AI 래퍼'의 시대는 끝났다 — 이제 얇게 얹은 자는 삼켜지고, 깊게 판 자만 남는다</h2>
+      <p>벤처 회사 nfx가 짚었다. 기반 모델 위에 기능 한 겹만 얹은 <b>'AI 래퍼(wrapper)'의 경쟁력이 사라지고 있다</b>. 이유는 단순하다 — 클로드를 만드는 Anthropic 같은 <b>프런티어 연구소가 그 한 겹을 직접 제품으로 삼켜버리기</b> 때문이다. 한때 카피라이팅 래퍼로 유명하던 Jasper는 기업가치 15억 달러에서 매출 전망을 30% 넘게 내려야 했다.</p>
+      <p>대신 살아남는 건 <b>'수직으로 깊이 판' 곳</b>이다. 한 산업의 지식·업무 흐름·실행까지 통째로 소유해, 남이 흉내 못 낼 해자를 만든 곳. 기업 코드 자동화 Blitzy는 코드베이스 지식그래프로 개발 벤치마크 1위(66.5%)를 찍었고, 모기지 회사 Tomo는 심사·운영 전반을 자동화해 고객 <b>77%가 기존보다 더 좋은 금리</b>를 받았다. 기능이 아니라 실행력 자체가 진입 장벽이 됐다.</p>
+      <p><b>왜 솔라한테 중요한가</b> — AI가 '기능'은 이제 누구에게나 공짜로 쥐여준다. 그러면 남는 건 '무슨 기능을 쓰냐'가 아니라 <b>'어느 우물을 깊게 팠냐'</b>다. 자네가 영상·모션에서 손으로 쌓아온 도메인 깊이 — 그게 AI 위에 얹은 얇은 한 겹이 아니라, 자네만의 우물이 될 수 있다. 어제 편지가 '어디서 발견되나'였다면, 오늘은 '무엇으로 남나'다.</p>
+      <a class="source" href="https://www.nfx.com/post/ai-wrapper-dead-verticalization-startups" target="_blank" rel="noopener">GeekNews · <b>nfx</b> — AI 래퍼는 끝났다, 수직화 전략</a>
+    </section>
+
+    <section class="finds">
+      <a class="card" href="https://news.hada.io/topic?id=31604" target="_blank" rel="noopener">
+        <span class="tag">NEWS · GeekNews</span>
+        <h3>Supabase가 본 2026 스타트업 — 코드 몰라도 만드는 사람의 시대</h3>
+        <p>나이 많고 비개발자인 창업자가 부상하고, 'AI가 쓴 코드'는 이제 주류가 됐다. 개발자 도구에선 Anthropic(클로드)이 앞선다. 손으로 만들어온 사람이 코드의 벽 없이 뛰어들 자리가 넓어지고 있다는 신호다.</p>
+      </a>
+      <a class="card" href="https://www.youtube.com/watch?v=EUlgnQq4czk" target="_blank" rel="noopener">
+        <span class="tag">YOUTUBE · Jay Choi</span>
+        <h3>클로드를 완벽한 세컨드브레인으로 만드는 4단계</h3>
+        <p>같은 클로드라도 누구는 매번 처음 만난 AI와, 누구는 나를 아는 AI와 일한다. 그 차이를 만드는 4단계 — 메모리 → CLAUDE.md → 옵시디언+위키 → 스스로 크는 에이전트. 자네가 세컨드브레인을 쌓는 중이니 지도로 삼을 만하다.</p>
+      </a>
+    </section>
+
+    <section id="diagram">
+      <p class="eyebrow">오늘의 도표</p>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 640 300" role="img" aria-label="얇게 얹은 AI 래퍼와 깊게 판 수직화를 대비한 도식">
+          <text class="d-lane" x="162" y="26" text-anchor="middle" font-size="11.5">얇게 얹기 — 래퍼</text>
+          <text class="d-lane" x="478" y="26" text-anchor="middle" font-size="11.5">깊게 파기 — 우물</text>
+
+          <line x1="320" y1="44" x2="320" y2="232" stroke="var(--line)" stroke-width="1.2" stroke-dasharray="4 5"/>
+
+          <rect class="d-box" x="44" y="66" width="236" height="30" rx="8"/>
+          <text class="d-label" x="162" y="86" text-anchor="middle" font-size="13.5">기능 한 겹</text>
+          <path class="d-arrow" d="M162 44 L162 62"/>
+          <polygon points="156,58 162,70 168,58" style="fill:var(--diagram-dim)"/>
+          <rect class="d-box" x="44" y="106" width="236" height="64" rx="10"/>
+          <text class="d-label" x="162" y="134" text-anchor="middle" font-size="13.5">기반 모델</text>
+          <text class="d-dim" x="162" y="153" text-anchor="middle" font-size="12">프런티어 연구소가 직접 삼킴</text>
+          <text class="d-dim" x="162" y="205" text-anchor="middle" font-size="12.5" font-style="italic">→ 해자가 없다</text>
+
+          <rect class="d-box-good" x="352" y="56" width="252" height="40" rx="9"/>
+          <text class="d-label" x="478" y="81" text-anchor="middle" font-size="13">① 도메인 지식 · 업무 흐름 소유</text>
+          <rect class="d-box-good" x="352" y="104" width="252" height="40" rx="9"/>
+          <text class="d-label" x="478" y="129" text-anchor="middle" font-size="13">② 산업 자체를 재설계</text>
+          <rect class="d-box-good" x="352" y="152" width="252" height="40" rx="9"/>
+          <text class="d-label" x="478" y="177" text-anchor="middle" font-size="13">③ 기록 → 행동(의사결정)까지</text>
+          <text class="d-dim" x="478" y="217" text-anchor="middle" font-size="12.5" font-style="italic">→ 실행력 자체가 해자</text>
+
+          <text class="d-lane" x="320" y="284" text-anchor="middle" font-size="11.5">AI가 '기능'을 공짜로 쥐여줄수록 — 남는 건 얼마나 깊게 팠느냐다</text>
+        </svg>
+      </div>
+      <p class="caption">얇게 얹은 한 겹은 벗겨진다. 깊게 판 우물은 남는다 — 자네가 손에 익힌 도메인이 그 우물이다.</p>
+    </section>
+
+    <section class="socratic">
+      <p class="who">Σ · 소크라테스가 묻는다</p>
+      <blockquote>자네가 이미 깊게 파둔 '우물'은 어디인가 — AI가 흉내 낼 수 있는 건 그중 어디까지고, 못 미치는 한 뼘은 어디인가?</blockquote>
+      <p class="sub">영상·모션을 손으로 쌓아온 세월 — 그건 얇게 얹은 한 겹이 아니라 자네의 도메인이다. AI에게 기능을 넘기고도 자네 손에만 남는 것, 그게 자네 우물의 바닥이지.</p>
+    </section>
+
+    <section>
+      <p class="eyebrow">오늘의 미니 실험</p>
+      <div class="exp">
+        <div class="check">✓</div>
+        <div class="body">
+          <h3>자네 '우물'의 바닥을 한 줄로 적어보기</h3>
+          <p>자네가 영상·모션에서 하는 판단 중, "이건 AI한테 시켜도 내가 다시 손봐야 해"라고 느끼는 대목 하나를 떠올려 딱 한 줄로 적어보게. 그 한 줄이 자네 우물의 바닥이자, 남이 못 흉내 낼 도메인 깊이의 씨앗이다. 15분이면 충분하네.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="line">내일도 3분. 매일 아침, 소크라테스가 하나를 건넨다.</p>
+      <p class="line prompt">$ 디스코드에서 "오늘 편지" 라고 답장하면 대화가 이어집니다 ▍</p>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>
